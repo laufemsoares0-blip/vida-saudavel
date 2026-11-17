@@ -23,6 +23,7 @@ body{background:#e8f5e9;padding-bottom:80px}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;font-size:11px;text-align:center}
 .bottom div{color:#888}
 .bottom .on{color:#2e9e4f;font-weight:bold}
+.small{font-size:12px;color:#2e9e4f;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -52,14 +53,14 @@ body{background:#e8f5e9;padding-bottom:80px}
 
 <div class="row">
 <div class="card"><h4>👟 Meta de Passos</h4><h2><span id="passos">6420</span> passos</h2><p style="font-size:12px">Meta: 10.000</p><div class="bar"><div class="fill" id="passoBar" style="width:64%"></div></div><button class="btn" onclick="addPasso()" style="margin-top:8px">+</button></div>
-<div class="card"><h4>🌙 Sono</h4><h2><span id="sono">7h 40min</span></h2><p style="font-size:12px">Meta: 8h</p><div style="font-size:30px">🛏️</div><button class="btn" onclick="addSono()" style="margin-top:8px">+</button></div>
+<div class="card"><h4>🌙 Sono</h4><h2><span id="sono">7h 40min</span></h2><p style="font-size:12px">Meta: <span id="metaSono">8h</span> <span class="small" onclick="mudarMetaSono()">✏️ alterar</span></p><div style="font-size:30px">🛏️</div><button class="btn" onclick="addSono()" style="margin-top:8px">+</button><p style="font-size:11px;color:#777;margin-top:4px">Aperte + e digite quantas horas dormiu</p></div>
 </div>
 
 <div class="card">
 <h3>✅ Hábitos Diários</h3><p style="font-size:12px;color:#777">Marque os hábitos que você cumpriu hoje</p>
 <label class="habit"><input type="checkbox" checked onchange="calc()"> Beber água (2L)</label>
 <label class="habit"><input type="checkbox" checked onchange="calc()"> Praticar atividade física</label>
-<label class="habit"><input type="checkbox" onchange="calc()"> Dormir bem (8h)</label>
+<label class="habit"><input type="checkbox" onchange="calc()"> Dormir bem (<span id="habitoSono">8h</span>)</label>
 <label class="habit"><input type="checkbox" checked onchange="calc()"> Ter uma alimentação equilibrada</label>
 <label class="habit"><input type="checkbox" onchange="calc()"> Evitar telas antes de dormir</label>
 </div>
@@ -72,10 +73,11 @@ body{background:#e8f5e9;padding-bottom:80px}
 <div class="bottom"><div class="on">🏠<br>Início</div><div>📊<br>Progresso</div><div>➕<br>Registrar</div><div>💚<br>Hábitos</div><div>👤<br>Perfil</div></div>
 
 <script>
-let agua=1.6, passos=6420;
+let agua=1.6, passos=6420, metaSonoNum=8;
 function addAgua(){agua+=0.2; if(agua>2) agua=2; let p=Math.round(agua/2*100); document.getElementById('aguaTxt').innerText=agua.toFixed(1).replace('.',',')+' L'; document.getElementById('aguaBar').style.width=p+'%'; document.getElementById('aguaPct').innerText=p+'%'; calc();}
 function addPasso(){passos+=500; document.getElementById('passos').innerText=passos; document.getElementById('passoBar').style.width=Math.min(passos/10000*100,100)+'%'; calc();}
-function addSono(){document.getElementById('sono').innerText='8h 00min'; alert('Parabéns! Você bateu sua meta de sono! 😴💚'); calc();}
+function addSono(){let h=prompt('Quantas horas você dormiu? Ex: 7.5'); if(!h) return; h=parseFloat(h.replace(',','.')); if(isNaN(h)) return; let horas=Math.floor(h); let min=Math.round((h-horas)*60); document.getElementById('sono').innerText=horas+'h '+ (min<10?'0':'') +min+'min'; if(h>=metaSonoNum){alert('Parabéns! Você bateu sua meta de sono! 😴💚');} else {alert('Você dormiu '+h+'h. Sua meta é '+metaSonoNum+'h. Quase lá! 💪');} calc();}
+function mudarMetaSono(){let m=prompt('Qual sua nova meta de sono? Ex: 7, 8 ou 9'); if(!m) return; m=parseFloat(m.replace(',','.')); if(isNaN(m)) return; metaSonoNum=m; document.getElementById('metaSono').innerText=m+'h'; document.getElementById('habitoSono').innerText=m+'h'; alert('Meta de sono alterada para '+m+'h! ✅');}
 function addAtiv(el){el.style.background='#c8e6c9'; document.getElementById('ativTxt').innerText='Atividade registrada! Parabéns! 🎉'; calc();}
 function calc(){let c=document.querySelectorAll('.habit input:checked').length; let p=Math.round(c/5*100); document.getElementById('prog').innerText=p; document.getElementById('progBar').style.width=p+'%';}
 </script>
