@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vida Saudável</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#e8f5e9;padding:16px;color:#222}
+h1{text-align:center;color:#2e7d32}
+.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+button{background:#2e7d32;color:#fff;border:0;padding:12px 16px;border-radius:10px;font-size:16px;width:100%;margin-top:8px}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin-top:8px;font-size:16px}
+.big{font-size:32px;text-align:center;font-weight:bold}
+p{text-align:center}
+</style>
+</head>
+<body>
+<h1>🌿 Vida Saudável</h1>
+<p>Cuide de você todos os dias!</p>
+
+<div class="card">
+<h2>💧 Água de hoje</h2>
+<div class="big"><span id="agua">0</span> copos</div>
+<button onclick="addAgua()">+ Beber 1 copo</button>
+<button onclick="zerarAgua()" style="background:#888">Zerar</button>
+</div>
+
+<div class="card">
+<h2>🚶 Passos</h2>
+<input type="number" id="passos" placeholder="Quantos passos hoje?">
+<button onclick="salvarPassos()">Salvar passos</button>
+<p id="msgPassos"></p>
+</div>
+
+<div class="card">
+<h2>🥗 Dica do dia</h2>
+<p id="dica">Beba água, coma frutas e durma bem!</p>
+<button onclick="novaDica()">Outra dica</button>
+</div>
+
+<script>
+let copos = 0;
+function addAgua(){copos++; document.getElementById('agua').innerText=copos;}
+function zerarAgua(){copos=0; document.getElementById('agua').innerText=copos;}
+function salvarPassos(){
+let p=document.getElementById('passos').value;
+document.getElementById('msgPassos').innerText = p ? "Parabéns! Você andou "+p+" passos hoje! 👏" : "Digite seus passos";
+}
+let dicas=["Beba 2L de água por dia","Coma 1 fruta no lanche","Caminhe 30 min por dia","Durma 8 horas","Evite refrigerante hoje","Alongue-se ao acordar"];
+function novaDica(){
+let d=dicas[Math.floor(Math.random()*dicas.length)];
+document.getElementById('dica').innerText=d;
+}
+</script>
+</body>
+</html>
