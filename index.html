@@ -5,53 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vida Saudável</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#e8f5e9;padding:16px;color:#222}
-h1{text-align:center;color:#2e7d32}
-.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-button{background:#2e7d32;color:#fff;border:0;padding:12px 16px;border-radius:10px;font-size:16px;width:100%;margin-top:8px}
-input{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin-top:8px;font-size:16px}
-.big{font-size:32px;text-align:center;font-weight:bold}
-p{text-align:center}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#e8f5e9;padding-bottom:80px}
+.top{background:#2e9e4f;color:#fff;padding:22px 16px 30px;border-radius:0 0 25px 25px}
+.top h1{font-size:28px}
+.top p{font-size:13px;opacity:.9}
+.card{background:#fff;margin:12px;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.row{display:flex;gap:12px;margin:0 12px}
+.row .card{margin:12px 0;flex:1}
+.bar{height:10px;background:#e0e0e0;border-radius:10px;overflow:hidden;margin-top:8px}
+.fill{height:100%;background:#2e9e4f}
+.btn{background:#2e9e4f;color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:22px;cursor:pointer}
+.chips{display:flex;gap:8px;margin-top:10px}
+.chip{background:#eef7ee;border-radius:12px;padding:10px;flex:1;text-align:center;font-size:12px}
+.habit{display:flex;gap:8px;margin:8px 0;font-size:14px}
+.habit input{width:18px;height:18px;accent-color:#2e9e4f}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;font-size:11px;text-align:center}
+.bottom div{color:#888}
+.bottom .on{color:#2e9e4f;font-weight:bold}
 </style>
 </head>
 <body>
-<h1>🌿 Vida Saudável</h1>
-<p>Cuide de você todos os dias!</p>
-
-<div class="card">
-<h2>💧 Água de hoje</h2>
-<div class="big"><span id="agua">0</span> copos</div>
-<button onclick="addAgua()">+ Beber 1 copo</button>
-<button onclick="zerarAgua()" style="background:#888">Zerar</button>
+<div class="top">
+<h1>💚 Vida Saudável</h1>
+<p>Seus hábitos, mais saúde e bem-estar</p>
+<p style="margin-top:14px;font-size:16px"><b>Olá! 👋</b><br>Cuide de você hoje e mantenha sua rotina saudável!</p>
 </div>
 
 <div class="card">
-<h2>🚶 Passos</h2>
-<input type="number" id="passos" placeholder="Quantos passos hoje?">
-<button onclick="salvarPassos()">Salvar passos</button>
-<p id="msgPassos"></p>
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div><h3>💧 Água</h3><p><span id="aguaTxt">1,6 L</span> de 2,0 L</p><div class="bar"><div class="fill" id="aguaBar" style="width:80%"></div></div><p id="aguaPct" style="text-align:right;font-weight:bold">80%</p></div>
+<div style="text-align:center"><div style="font-size:40px">🥤</div><button class="btn" onclick="addAgua()">+</button></div>
+</div>
 </div>
 
 <div class="card">
-<h2>🥗 Dica do dia</h2>
-<p id="dica">Beba água, coma frutas e durma bem!</p>
-<button onclick="novaDica()">Outra dica</button>
+<h3>🏋️ Atividades Físicas</h3><p style="font-size:12px;color:#777">Exercícios para o seu bem-estar</p>
+<div class="chips">
+<div class="chip" onclick="addAtiv(this)">🏃<br>Exercícios</div>
+<div class="chip" onclick="addAtiv(this)">🚶<br>Caminhada</div>
+<div class="chip" onclick="addAtiv(this)">🚲<br>Pedalada</div>
+<div class="chip" onclick="addAtiv(this)">🧘<br>Alongamento</div>
 </div>
+<p id="ativTxt" style="margin-top:8px;font-size:13px;color:#2e9e4f">Clique em uma atividade para registrar ✅</p>
+</div>
+
+<div class="row">
+<div class="card"><h4>👟 Meta de Passos</h4><h2><span id="passos">6420</span> passos</h2><p style="font-size:12px">Meta: 10.000</p><div class="bar"><div class="fill" id="passoBar" style="width:64%"></div></div><button class="btn" onclick="addPasso()" style="margin-top:8px">+</button></div>
+<div class="card"><h4>🌙 Sono</h4><h2><span id="sono">7h 40min</span></h2><p style="font-size:12px">Meta: 8h</p><div style="font-size:30px">🛏️</div><button class="btn" onclick="addSono()" style="margin-top:8px">+</button></div>
+</div>
+
+<div class="card">
+<h3>✅ Hábitos Diários</h3><p style="font-size:12px;color:#777">Marque os hábitos que você cumpriu hoje</p>
+<label class="habit"><input type="checkbox" checked onchange="calc()"> Beber água (2L)</label>
+<label class="habit"><input type="checkbox" checked onchange="calc()"> Praticar atividade física</label>
+<label class="habit"><input type="checkbox" onchange="calc()"> Dormir bem (8h)</label>
+<label class="habit"><input type="checkbox" checked onchange="calc()"> Ter uma alimentação equilibrada</label>
+<label class="habit"><input type="checkbox" onchange="calc()"> Evitar telas antes de dormir</label>
+</div>
+
+<div class="row">
+<div class="card"><h4>📊 Progresso</h4><p style="font-size:12px">Resumo do seu dia</p><h1 style="color:#2e9e4f"><span id="prog">75</span>%</h1><p style="font-size:12px">da meta diária</p><div class="bar"><div class="fill" id="progBar" style="width:75%"></div></div></div>
+<div class="card"><h4>🎯 Meta do Dia</h4><p style="font-size:13px">✅ Beber água<br>✅ Fazer atividade física<br>✅ Atingir 10.000 passos<br>✅ Dormir bem</p></div>
+</div>
+
+<div class="bottom"><div class="on">🏠<br>Início</div><div>📊<br>Progresso</div><div>➕<br>Registrar</div><div>💚<br>Hábitos</div><div>👤<br>Perfil</div></div>
 
 <script>
-let copos = 0;
-function addAgua(){copos++; document.getElementById('agua').innerText=copos;}
-function zerarAgua(){copos=0; document.getElementById('agua').innerText=copos;}
-function salvarPassos(){
-let p=document.getElementById('passos').value;
-document.getElementById('msgPassos').innerText = p ? "Parabéns! Você andou "+p+" passos hoje! 👏" : "Digite seus passos";
-}
-let dicas=["Beba 2L de água por dia","Coma 1 fruta no lanche","Caminhe 30 min por dia","Durma 8 horas","Evite refrigerante hoje","Alongue-se ao acordar"];
-function novaDica(){
-let d=dicas[Math.floor(Math.random()*dicas.length)];
-document.getElementById('dica').innerText=d;
-}
+let agua=1.6, passos=6420;
+function addAgua(){agua+=0.2; if(agua>2) agua=2; let p=Math.round(agua/2*100); document.getElementById('aguaTxt').innerText=agua.toFixed(1).replace('.',',')+' L'; document.getElementById('aguaBar').style.width=p+'%'; document.getElementById('aguaPct').innerText=p+'%'; calc();}
+function addPasso(){passos+=500; document.getElementById('passos').innerText=passos; document.getElementById('passoBar').style.width=Math.min(passos/10000*100,100)+'%'; calc();}
+function addSono(){document.getElementById('sono').innerText='8h 00min'; alert('Parabéns! Você bateu sua meta de sono! 😴💚'); calc();}
+function addAtiv(el){el.style.background='#c8e6c9'; document.getElementById('ativTxt').innerText='Atividade registrada! Parabéns! 🎉'; calc();}
+function calc(){let c=document.querySelectorAll('.habit input:checked').length; let p=Math.round(c/5*100); document.getElementById('prog').innerText=p; document.getElementById('progBar').style.width=p+'%';}
 </script>
 </body>
 </html>
